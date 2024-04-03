@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using apiv2.Data;
 using apiv2.models;
 using Microsoft.AspNetCore.Mvc;
-using apiv2.Dtos; // Install Bcrypt.Net-Next NuGet Package
+using apiv2.Dtos;
+using BCrypt.Net; // Install Bcrypt.Net-Next NuGet Package
 
 namespace apiv2.Controllers
 {
@@ -31,11 +32,13 @@ namespace apiv2.Controllers
         {
             if (userDto.IsCreatingCouple || userDto.CoupleCode == 0)
             {
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+                
                 var user = new User
                 {
                     Name = userDto.Name,
                     Username = userDto.Username,
-                    Password = userDto.Password,
+                    Password = hashedPassword,
                     Birthday = userDto.Birthday
                 };
 
@@ -56,11 +59,13 @@ namespace apiv2.Controllers
             }
             else
             {
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+
                 var user = new User
                 {
                     Name = userDto.Name,
                     Username = userDto.Username,
-                    Password = userDto.Password,
+                    Password = hashedPassword,
                     Birthday = userDto.Birthday
                 };
                  _context.Users.Add(user);
