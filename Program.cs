@@ -5,6 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS Configuration (Ideally near the top)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", 
+        policyBuilder => policyBuilder.WithOrigins("http://localhost:5173")// Front End Port
+                                   .AllowAnyMethod()
+                                   .AllowAnyHeader());
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,6 +25,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(options => {
 
 
 var app = builder.Build();
+
+app.UseCors("AllowSpecificOrigin");
 
 if (app.Environment.IsDevelopment())
 {
