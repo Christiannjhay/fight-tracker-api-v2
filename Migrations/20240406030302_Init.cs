@@ -20,7 +20,7 @@ namespace apiv2.Migrations
                     CoupleCode = table.Column<int>(type: "int", nullable: false),
                     Couple_1 = table.Column<int>(type: "int", nullable: false),
                     Couple_2 = table.Column<int>(type: "int", nullable: false),
-                    Anniversary = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Anniversary = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,7 +36,7 @@ namespace apiv2.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Birthday = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Birthday = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace apiv2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CoupleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -65,10 +65,40 @@ namespace apiv2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Expires = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Revoked = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Fights_CoupleId",
                 table: "Fights",
                 column: "CoupleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -78,10 +108,13 @@ namespace apiv2.Migrations
                 name: "Fights");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "RefreshTokens");
 
             migrationBuilder.DropTable(
                 name: "Couples");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

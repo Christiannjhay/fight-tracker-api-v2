@@ -15,6 +15,6 @@ namespace apiv2.models
 
         public string Password { get; set; } = string.Empty;
 
-        public DateTime Birthday { get; set; }
+        public DateTimeOffset Birthday { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace apiv2.models
 
         public int Couple_2 { get; set; }
 
-        public DateTime Anniversary { get; set; }
+        public DateTimeOffset Anniversary { get; set; }
 
         public List<Fight> Fights { get; set; } = new List<Fight>();
     }

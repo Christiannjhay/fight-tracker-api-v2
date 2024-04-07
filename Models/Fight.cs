@@ -14,7 +14,7 @@ namespace apiv2.models
 
         public string Details { get; set; } = string.Empty;
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
         public int CoupleId { get; set; }
 

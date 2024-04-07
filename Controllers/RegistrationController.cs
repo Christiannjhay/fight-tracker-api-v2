@@ -19,14 +19,14 @@ namespace apiv2.Controllers
         {
             _context = context;
         }
-
+        
         private static int GenerateRandomCoupleCode()
         {
             Random random = new Random();
             return random.Next(100000, 999999);
         }
-
-
+        
+    
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegistrationDto userDto)
         {
