@@ -12,7 +12,7 @@ using apiv2.Data;
 namespace apiv2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240406030302_Init")]
+    [Migration("20240409234351_Init")]
     partial class Init
     {
         /// <inheritdoc />

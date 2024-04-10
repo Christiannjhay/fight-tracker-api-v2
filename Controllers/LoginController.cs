@@ -54,9 +54,9 @@ namespace apiv2.Controllers
 
             SetJwtCookie("jwtToken", jwtToken);
             SetJwtCookie("refreshToken", refreshToken.Token);
-
+            
             // 4. Return Both Tokens
-            return Ok(new { token = jwtToken, refreshToken = refreshToken.Token });
+            return Ok(new { token = jwtToken, refreshToken = refreshToken.Token, userId = user.UserId});
         }
 
         private void SetJwtCookie(string name, string token)

@@ -30,7 +30,7 @@ namespace apiv2.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegistrationDto userDto)
         {
-            if (userDto.IsCreatingCouple || userDto.CoupleCode == 0)
+            if ( userDto.CoupleCode == 0)
             {
                 var hashedPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
                 
@@ -49,7 +49,6 @@ namespace apiv2.Controllers
                 {
                     Couple_1 = user.UserId,
                     Couple_2 = -1,
-                    Anniversary = userDto.Anniversary,
                     CoupleCode = GenerateRandomCoupleCode()
                 };
 

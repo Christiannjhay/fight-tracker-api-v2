@@ -12,8 +12,6 @@ namespace apiv2.Dtos
         public string Password { get; set; } = string.Empty;
         public DateTimeOffset Birthday { get; set; }
 
-        public DateTimeOffset Anniversary { get; set; }
-        public bool IsCreatingCouple { get; set; }
         public int CoupleCode { get; set; }
         public int CoupleUserId { get; internal set; }
     }
